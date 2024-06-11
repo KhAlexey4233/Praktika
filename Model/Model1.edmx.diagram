@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="02a7aa312fe8441984863c3402b13c49" Name="Diagram1">
+        <EntityTypeShape EntityType="PR2024Model.Agents" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="PR2024Model.Apartments" Width="1.5" PointX="5.75" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="PR2024Model.Clients" Width="1.5" PointX="0.75" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PR2024Model.Deals" Width="1.5" PointX="8.25" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PR2024Model.Demand_Apartments" Width="1.5" PointX="0.75" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PR2024Model.Demand_Houses" Width="1.5" PointX="0.75" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PR2024Model.Demand_Lands" Width="1.5" PointX="0.75" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PR2024Model.Demands" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PR2024Model.Districts" Width="1.5" PointX="1.5" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PR2024Model.Houses" Width="1.5" PointX="7.75" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="PR2024Model.Lands" Width="1.5" PointX="5.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="PR2024Model.RealEstates" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PR2024Model.Supply" Width="1.5" PointX="6" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PR2024Model.sysdiagrams" Width="1.5" PointX="7.75" PointY="10" IsExpanded="true" />
+        <AssociationConnector Association="PR2024Model.FK_Demands_Agents" ManuallyRouted="false" />
+        <AssociationConnector Association="PR2024Model.FK_Supply_Agents" ManuallyRouted="false" />
+        <AssociationConnector Association="PR2024Model.FK_Demands_Clients" ManuallyRouted="false" />
+        <AssociationConnector Association="PR2024Model.FK_Supply_Clients" ManuallyRouted="false" />
+        <AssociationConnector Association="PR2024Model.FK_Deals_Demands" ManuallyRouted="false" />
+        <AssociationConnector Association="PR2024Model.FK_Deals_Supply" ManuallyRouted="false" />
+        <AssociationConnector Association="PR2024Model.FK_Demands_Demand_Apartments" ManuallyRouted="false" />
+        <AssociationConnector Association="PR2024Model.FK_Demands_Demand_Houses" ManuallyRouted="false" />
+        <AssociationConnector Association="PR2024Model.FK_Demands_Demand_Lands" ManuallyRouted="false" />
+        <AssociationConnector Association="PR2024Model.FK_RealEstates_Districts" ManuallyRouted="false" />
+        <AssociationConnector Association="PR2024Model.FK_Supply_RealEstates" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

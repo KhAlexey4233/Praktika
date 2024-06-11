@@ -1,0 +1,563 @@
+﻿<Window x:Class="PR2024.Supply"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PR2024"
+        mc:Ignorable="d"
+        Title="Supply" Height="450" Width="Auto"
+        WindowStartupLocation="CenterScreen"
+    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
+    <Window.Resources>
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="TextBox.Static.Background" Color="#FFFFFFFF"/>
+        <Style x:Key="ComboBoxEditableTextBox" TargetType="{x:Type TextBox}">
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="AllowDrop" Value="true"/>
+            <Setter Property="MinWidth" Value="0"/>
+            <Setter Property="MinHeight" Value="0"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <ScrollViewer x:Name="PART_ContentHost" Background="Transparent" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <LinearGradientBrush x:Key="ComboBox.Static.Background" EndPoint="0,1" StartPoint="0,0">
+            <GradientStop Color="White" Offset="0.0"/>
+            <GradientStop Color="White" Offset="1.0"/>
+        </LinearGradientBrush>
+        <SolidColorBrush x:Key="ComboBox.Static.Border" Color="Black"/>
+        <SolidColorBrush x:Key="ComboBox.Static.Glyph" Color="Black"/>
+        <SolidColorBrush x:Key="ComboBox.Static.Editable.Background" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="ComboBox.Static.Editable.Border" Color="White"/>
+        <SolidColorBrush x:Key="ComboBox.Static.Editable.Button.Background" Color="Transparent"/>
+        <SolidColorBrush x:Key="ComboBox.Static.Editable.Button.Border" Color="Transparent"/>
+        <LinearGradientBrush x:Key="ComboBox.MouseOver.Background" EndPoint="0,1" StartPoint="0,0">
+            <GradientStop Color="White" Offset="0.0"/>
+            <GradientStop Color="White" Offset="1.0"/>
+        </LinearGradientBrush>
+        <SolidColorBrush x:Key="ComboBox.MouseOver.Border" Color="#0091EA"/>
+        <SolidColorBrush x:Key="ComboBox.MouseOver.Glyph" Color="#FF000000"/>
+        <SolidColorBrush x:Key="ComboBox.MouseOver.Editable.Background" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="ComboBox.MouseOver.Editable.Border" Color="#FF7EB4EA"/>
+        <LinearGradientBrush x:Key="ComboBox.MouseOver.Editable.Button.Background" EndPoint="0,1" StartPoint="0,0">
+            <GradientStop Color="#FFEBF4FC" Offset="0.0"/>
+            <GradientStop Color="#FFDCECFC" Offset="1.0"/>
+        </LinearGradientBrush>
+        <SolidColorBrush x:Key="ComboBox.MouseOver.Editable.Button.Border" Color="#0091EA"/>
+        <LinearGradientBrush x:Key="ComboBox.Pressed.Background" EndPoint="0,1" StartPoint="0,0">
+            <GradientStop Color="#FFDAECFC" Offset="0.0"/>
+            <GradientStop Color="#FFC4E0FC" Offset="1.0"/>
+        </LinearGradientBrush>
+        <SolidColorBrush x:Key="ComboBox.Pressed.Border" Color="White"/>
+        <SolidColorBrush x:Key="ComboBox.Pressed.Glyph" Color="#FF000000"/>
+        <SolidColorBrush x:Key="ComboBox.Pressed.Editable.Background" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="ComboBox.Pressed.Editable.Border" Color="White"/>
+        <LinearGradientBrush x:Key="ComboBox.Pressed.Editable.Button.Background" EndPoint="0,1" StartPoint="0,0">
+            <GradientStop Color="White" Offset="0.0"/>
+            <GradientStop Color="White" Offset="1.0"/>
+        </LinearGradientBrush>
+        <SolidColorBrush x:Key="ComboBox.Pressed.Editable.Button.Border" Color="White"/>
+        <SolidColorBrush x:Key="ComboBox.Disabled.Background" Color="#FFF0F0F0"/>
+        <SolidColorBrush x:Key="ComboBox.Disabled.Border" Color="#FFD9D9D9"/>
+        <SolidColorBrush x:Key="ComboBox.Disabled.Glyph" Color="#FFBFBFBF"/>
+        <SolidColorBrush x:Key="ComboBox.Disabled.Editable.Background" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="ComboBox.Disabled.Editable.Border" Color="#FFBFBFBF"/>
+        <SolidColorBrush x:Key="ComboBox.Disabled.Editable.Button.Background" Color="Transparent"/>
+        <SolidColorBrush x:Key="ComboBox.Disabled.Editable.Button.Border" Color="Transparent"/>
+        <Style x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="IsTabStop" Value="false"/>
+            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="ClickMode" Value="Press"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border x:Name="templateRoot" CornerRadius="5" Background="{StaticResource ComboBox.Static.Background}" BorderBrush="{StaticResource ComboBox.Static.Border}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                            <Border x:Name="splitBorder" BorderBrush="Transparent" BorderThickness="1" HorizontalAlignment="Right" Margin="0" SnapsToDevicePixels="true" Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}">
+                                <Path x:Name="arrow" Data="F1 M 0,0 L 2.667,2.66665 L 5.3334,0 L 5.3334,-1.78168 L 2.6667,0.88501 L0,-1.78168 L0,0 Z" Fill="{StaticResource ComboBox.Static.Glyph}" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center">
+                                    <Path.Style>
+                                        <Style TargetType="Path">
+                                            <Setter Property="Fill" Value="#0091EA"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Fill" Value="Black"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Path.Style>
+                                </Path>
+                            </Border>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="true"/>
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=Self}}" Value="false"/>
+                                    <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource Mode=Self}}" Value="false"/>
+                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}}" Value="true"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource ComboBox.Static.Editable.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource ComboBox.Static.Editable.Border}"/>
+                                <Setter Property="Background" TargetName="splitBorder" Value="{StaticResource ComboBox.Static.Editable.Button.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="splitBorder" Value="{StaticResource ComboBox.Static.Editable.Button.Border}"/>
+                            </MultiDataTrigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Fill" TargetName="arrow" Value="{StaticResource ComboBox.MouseOver.Glyph}"/>
+                            </Trigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=Self}}" Value="true"/>
+                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="false"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource ComboBox.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource ComboBox.MouseOver.Border}"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=Self}}" Value="true"/>
+                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="true"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource ComboBox.MouseOver.Editable.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource ComboBox.MouseOver.Editable.Border}"/>
+                                <Setter Property="Background" TargetName="splitBorder" Value="{StaticResource ComboBox.MouseOver.Editable.Button.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="splitBorder" Value="{StaticResource ComboBox.MouseOver.Editable.Button.Border}"/>
+                            </MultiDataTrigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Fill" TargetName="arrow" Value="{StaticResource ComboBox.Pressed.Glyph}"/>
+                            </Trigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource Mode=Self}}" Value="true"/>
+                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="false"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource ComboBox.Pressed.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource ComboBox.Pressed.Border}"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource Mode=Self}}" Value="true"/>
+                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="true"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource ComboBox.Pressed.Editable.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource ComboBox.Pressed.Editable.Border}"/>
+                                <Setter Property="Background" TargetName="splitBorder" Value="{StaticResource ComboBox.Pressed.Editable.Button.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="splitBorder" Value="{StaticResource ComboBox.Pressed.Editable.Button.Border}"/>
+                            </MultiDataTrigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Fill" TargetName="arrow" Value="{StaticResource ComboBox.Disabled.Glyph}"/>
+                            </Trigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}}" Value="false"/>
+                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="false"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource ComboBox.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource ComboBox.Disabled.Border}"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}}" Value="false"/>
+                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="true"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource ComboBox.Disabled.Editable.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="templateRoot" Value="Black"/>
+                                <Setter Property="Background" TargetName="splitBorder" Value="{StaticResource ComboBox.Disabled.Editable.Button.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="splitBorder" Value="Black"/>
+                            </MultiDataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <ControlTemplate x:Key="ComboBoxEditableTemplate" TargetType="{x:Type ComboBox}">
+            <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" Width="0"/>
+                </Grid.ColumnDefinitions>
+                <Popup x:Name="PART_Popup" AllowsTransparency="true" Grid.ColumnSpan="2" IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource Mode=TemplatedParent}}" Placement="Bottom" PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
+                    <theme:SystemDropShadowChrome x:Name="shadow" Color="Transparent" MinWidth="{Binding ActualWidth, ElementName=templateRoot}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                        <Border x:Name="dropDownBorder" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}" BorderThickness="1">
+                            <ScrollViewer x:Name="DropDownScrollViewer">
+                                <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
+                                    <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0">
+                                        <Rectangle x:Name="opaqueRect" Fill="{Binding Background, ElementName=dropDownBorder}" Height="{Binding ActualHeight, ElementName=dropDownBorder}" Width="{Binding ActualWidth, ElementName=dropDownBorder}"/>
+                                    </Canvas>
+                                    <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </Grid>
+                            </ScrollViewer>
+                        </Border>
+                    </theme:SystemDropShadowChrome>
+                </Popup>
+                <ToggleButton x:Name="toggleButton" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Grid.ColumnSpan="2" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}" Style="{StaticResource ComboBoxToggleButton}"/>
+                <Border x:Name="border" Background="{StaticResource TextBox.Static.Background}" Margin="{TemplateBinding BorderThickness}">
+                    <TextBox x:Name="PART_EditableTextBox" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource Mode=TemplatedParent}}" Margin="{TemplateBinding Padding}" Style="{StaticResource ComboBoxEditableTextBox}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                </Border>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                </Trigger>
+                <Trigger Property="IsKeyboardFocusWithin" Value="true">
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+                <Trigger Property="HasDropShadow" SourceName="PART_Popup" Value="true">
+                    <Setter Property="Margin" TargetName="shadow" Value="0,0,5,5"/>
+                    <Setter Property="Color" TargetName="shadow" Value="#71000000"/>
+                </Trigger>
+                <Trigger Property="HasItems" Value="false">
+                    <Setter Property="Height" TargetName="dropDownBorder" Value="95"/>
+                </Trigger>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsGrouping" Value="true"/>
+                        <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                </MultiTrigger>
+                <Trigger Property="ScrollViewer.CanContentScroll" SourceName="DropDownScrollViewer" Value="false">
+                    <Setter Property="Canvas.Top" TargetName="opaqueRect" Value="{Binding VerticalOffset, ElementName=DropDownScrollViewer}"/>
+                    <Setter Property="Canvas.Left" TargetName="opaqueRect" Value="{Binding HorizontalOffset, ElementName=DropDownScrollViewer}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <ControlTemplate x:Key="ComboBoxTemplate" TargetType="{x:Type ComboBox}">
+            <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" Width="0"/>
+                </Grid.ColumnDefinitions>
+                <Popup x:Name="PART_Popup" AllowsTransparency="true" Grid.ColumnSpan="2" IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}" Margin="1" Placement="Bottom" PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
+                    <theme:SystemDropShadowChrome x:Name="shadow" Color="Transparent" MinWidth="{Binding ActualWidth, ElementName=templateRoot}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                        <Border x:Name="dropDownBorder" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}" BorderThickness="1">
+                            <ScrollViewer x:Name="DropDownScrollViewer">
+                                <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
+                                    <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0">
+                                        <Rectangle x:Name="opaqueRect" Fill="{Binding Background, ElementName=dropDownBorder}" Height="{Binding ActualHeight, ElementName=dropDownBorder}" Width="{Binding ActualWidth, ElementName=dropDownBorder}"/>
+                                    </Canvas>
+                                    <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </Grid>
+                            </ScrollViewer>
+                        </Border>
+                    </theme:SystemDropShadowChrome>
+                </Popup>
+                <ToggleButton x:Name="toggleButton" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Grid.ColumnSpan="2" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}" Style="{StaticResource ComboBoxToggleButton}"/>
+                <ContentPresenter x:Name="contentPresenter" ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" Content="{TemplateBinding SelectionBoxItem}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsHitTestVisible="false" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="HasDropShadow" SourceName="PART_Popup" Value="true">
+                    <Setter Property="Margin" TargetName="shadow" Value="0,0,5,5"/>
+                    <Setter Property="Color" TargetName="shadow" Value="#71000000"/>
+                </Trigger>
+                <Trigger Property="HasItems" Value="false">
+                    <Setter Property="Height" TargetName="dropDownBorder" Value="95"/>
+                </Trigger>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsGrouping" Value="true"/>
+                        <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                </MultiTrigger>
+                <Trigger Property="ScrollViewer.CanContentScroll" SourceName="DropDownScrollViewer" Value="false">
+                    <Setter Property="Canvas.Top" TargetName="opaqueRect" Value="{Binding VerticalOffset, ElementName=DropDownScrollViewer}"/>
+                    <Setter Property="Canvas.Left" TargetName="opaqueRect" Value="{Binding HorizontalOffset, ElementName=DropDownScrollViewer}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <Style x:Key="ComboBoxStyle1" TargetType="{x:Type ComboBox}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1.8"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="Padding" Value="6,3,5,3"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="Margin" Value="0,0,15,0"/>
+            <Setter Property="FontFamily" Value="/Fonts/Montserrat-Regular.ttf#Montserrat"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Template" Value="{StaticResource ComboBoxTemplate}"/>
+            <Style.Triggers>
+                <Trigger Property="IsEditable" Value="true">
+                    <Setter Property="IsTabStop" Value="false"/>
+                    <Setter Property="Padding" Value="2"/>
+                    <Setter Property="Template" Value="{StaticResource ComboBoxEditableTemplate}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <StackPanel Orientation="Horizontal">
+        <StackPanel Background="#263238">
+            <Grid x:Name="navigation" HorizontalAlignment="Left" Width="55">
+                <StackPanel x:Name="stackpnl">
+                    <Grid Height="60">
+                        <ToggleButton x:Name="ToggleButton" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="13,-10,0,0" Height="30" Width="30" BorderThickness="0">
+                            <ToggleButton.Background>
+                                <ImageBrush ImageSource="/Resources/menu.png" Stretch="None"/>
+                            </ToggleButton.Background>
+                            <ToggleButton.Triggers>
+                                <EventTrigger RoutedEvent="ToggleButton.Unchecked">
+                                    <BeginStoryboard>
+                                        <Storyboard x:Name="HideStackPanel">
+                                            <DoubleAnimation Storyboard.TargetName="navigation" Storyboard.TargetProperty="Width" Duration="0:0:0.3" BeginTime="0:0:0" From="130" To="55"></DoubleAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="ToggleButton.Checked">
+                                    <BeginStoryboard>
+                                        <Storyboard x:Name="ShowStackPanel">
+                                            <DoubleAnimation Storyboard.TargetName="navigation" Storyboard.TargetProperty="Width" Duration="0:0:0.3" BeginTime="0:0:0" From="55" To="130"></DoubleAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </ToggleButton.Triggers>
+                        </ToggleButton>
+                    </Grid>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Width="40" x:Name="AgentBtn" HorizontalAlignment="Left" Margin="9,0,10,0" Click="AgentBtn_Click">
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <Image Source="/Resources/agent.png"></Image>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <Label Content="Агенты" VerticalAlignment="Bottom" Foreground="White" FontSize="16" Margin="-10,0,0,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                        <Button Width="40" x:Name="DealBtn" HorizontalAlignment="Left" Margin="9,0,10,0" Click="DealBtn_Click">
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <Image Source="/Resources/deals.png"></Image>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <Label Content="Сделки" VerticalAlignment="Bottom" Foreground="White" FontSize="16" Margin="-10,0,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+        <StackPanel Orientation="Vertical">
+            <Canvas UseLayoutRounding="False" Width="73.0" Height="30.0" HorizontalAlignment="Left" Margin="15,10,0,0">
+                <Canvas.Clip>
+                    <RectangleGeometry Rect="0.0,0.0,73.0,30.0"/>
+                </Canvas.Clip>
+                <Path RenderTransform="1.0,0.0,0.0,1.0,6.5376,22.5" Fill="#ff0091ea">
+                    <Path.Data>
+                        <PathGeometry Figures="M 6.46247 7.5 L -1.43328e-07 3.75 L 6.46247 0 V 7.5 Z" FillRule="Nonzero"/>
+                    </Path.Data>
+                </Path>
+                <Path RenderTransform="1.0,0.0,0.0,1.0,13.0,22.5" Fill="#ff0091ea">
+                    <Path.Data>
+                        <PathGeometry Figures="M -5.73311e-07 0 V 7.5 L 6.53762 3.75 L -5.73311e-07 0 Z" FillRule="Nonzero"/>
+                    </Path.Data>
+                </Path>
+                <Canvas UseLayoutRounding="False">
+                    <Path RenderTransform="1.0,0.0,0.0,1.0,0.0,11.25" Fill="#ff0091ea">
+                        <Path.Data>
+                            <PathGeometry Figures="M 6.53762 7.5 L 0 3.75 L 6.53762 0 V 7.5 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path RenderTransform="1.0,0.0,0.0,1.0,6.5376,7.5" Fill="#ff0091ea">
+                        <Path.Data>
+                            <PathGeometry Figures="M 6.46247 7.5 L -1.43328e-07 3.75 L 6.46247 0 V 7.5 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path RenderTransform="1.0,0.0,0.0,1.0,13.0,3.75" Fill="#ff0091ea">
+                        <Path.Data>
+                            <PathGeometry Figures="M 6.53762 7.5 L -5.73311e-07 3.75 L 6.53762 0 V 7.5 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path RenderTransform="1.0,0.0,0.0,1.0,19.5376,7.5" Fill="#ff0091ea">
+                        <Path.Data>
+                            <PathGeometry Figures="M 6.46247 7.5 L 0 3.75 L 6.46247 0 V 7.5 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path RenderTransform="1.0,0.0,0.0,1.0,0.0,3.75" Fill="#ff0091ea">
+                        <Path.Data>
+                            <PathGeometry Figures="M 6.53762 7.5 L 0 3.75 L 6.53762 0 V 7.5 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path RenderTransform="1.0,0.0,0.0,1.0,6.5376,0.0" Fill="#ff0091ea">
+                        <Path.Data>
+                            <PathGeometry Figures="M 6.46247 7.5 L -1.43328e-07 3.75 L 6.46247 0 V 7.5 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path RenderTransform="1.0,0.0,0.0,1.0,6.5376,15.0" Fill="#ff0091ea">
+                        <Path.Data>
+                            <PathGeometry Figures="M 6.46247 7.5 L -1.43328e-07 3.75 L 6.46247 0 V 7.5 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path RenderTransform="1.0,0.0,0.0,1.0,0.0,18.75" Fill="#ff0091ea">
+                        <Path.Data>
+                            <PathGeometry Figures="M 6.53762 7.5 L 0 3.75 L 6.53762 0 V 7.5 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path RenderTransform="1.0,0.0,0.0,1.0,13.0,18.75" Fill="#ff0091ea">
+                        <Path.Data>
+                            <PathGeometry Figures="M 6.53762 7.5 L -5.73311e-07 3.75 L 6.53762 0 V 7.5 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path RenderTransform="1.0,0.0,0.0,1.0,19.5376,15.0" Fill="#ff0091ea">
+                        <Path.Data>
+                            <PathGeometry Figures="M 6.46247 7.5 L 0 3.75 L 6.46247 0 V 7.5 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path RenderTransform="1.0,0.0,0.0,1.0,13.0,11.25" Fill="#ff0091ea">
+                        <Path.Data>
+                            <PathGeometry Figures="M 6.53762 7.5 L -5.73311e-07 3.75 L 6.53762 0 V 7.5 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path RenderTransform="1.0,0.0,0.0,1.0,0.0,7.5" Fill="#ff0091ea">
+                        <Path.Data>
+                            <PathGeometry Figures="M 6.53762 3.75 L 4.35841 5.025 L 0 7.5 V 0 L 2.17921 1.275 L 6.53762 3.75 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path RenderTransform="1.0,0.0,0.0,1.0,6.5376,3.75" Fill="#ff0091ea">
+                        <Path.Data>
+                            <PathGeometry Figures="M -1.43328e-07 0 V 7.5 L 6.46247 3.75 L -1.43328e-07 0 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path RenderTransform="1.0,0.0,0.0,1.0,13.0,0.0" Fill="#ff0091ea">
+                        <Path.Data>
+                            <PathGeometry Figures="M -5.73311e-07 0 V 7.5 L 6.53762 3.75 L -5.73311e-07 0 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path RenderTransform="1.0,0.0,0.0,1.0,6.5376,18.75" Fill="#ff0091ea">
+                        <Path.Data>
+                            <PathGeometry Figures="M -1.43328e-07 0 V 7.5 L 6.46247 3.75 L -1.43328e-07 0 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path RenderTransform="1.0,0.0,0.0,1.0,13.0,15.0" Fill="#ff0091ea">
+                        <Path.Data>
+                            <PathGeometry Figures="M -5.73311e-07 0 V 7.5 L 6.53762 3.75 L -5.73311e-07 0 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path RenderTransform="1.0,0.0,0.0,1.0,19.5376,11.25" Fill="#ff0091ea">
+                        <Path.Data>
+                            <PathGeometry Figures="M 0 0 V 7.5 L 6.46247 3.75 L 0 0 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path RenderTransform="1.0,0.0,0.0,1.0,6.5376,11.25" Fill="#ff0091ea">
+                        <Path.Data>
+                            <PathGeometry Figures="M -1.43328e-07 0 V 7.5 L 6.46247 3.75 L -1.43328e-07 0 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path RenderTransform="1.0,0.0,0.0,1.0,0.0,15.0" Fill="#ff0091ea">
+                        <Path.Data>
+                            <PathGeometry Figures="M 6.53762 3.75 L 0 7.5 V 0 L 6.53762 3.75 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path RenderTransform="1.0,0.0,0.0,1.0,13.0,7.5" Fill="#ff0091ea">
+                        <Path.Data>
+                            <PathGeometry Figures="M -5.73311e-07 0 V 7.5 L 6.53762 3.75 L -5.73311e-07 0 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path RenderTransform="1.0,0.0,0.0,1.0,19.5376,3.75" Fill="#ff0091ea">
+                        <Path.Data>
+                            <PathGeometry Figures="M 0 0 V 7.5 L 6.46247 3.75 L 0 0 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path RenderTransform="1.0,0.0,0.0,1.0,19.5376,18.75" Fill="#ff0091ea">
+                        <Path.Data>
+                            <PathGeometry Figures="M 0 0 V 7.5 L 6.46247 3.75 L 0 0 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path RenderTransform="1.0,0.0,0.0,1.0,2.1792,2.475" Fill="#ffffffff">
+                        <Path.Data>
+                            <PathGeometry Figures="M 13.0001 3.75 L 10.8209 -3.57628e-08 L 7.16639e-08 6.3 L 10.8209 25.05 L 21.7169 18.75 L 19.5377 15 L 13.0001 18.75 L 10.8209 15 L 17.3585 11.25 L 15.1793 7.5 L 8.64168 11.25 L 6.46247 7.5 L 13.0001 3.75 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path RenderTransform="1.0,0.0,0.0,1.0,31.0,12.2992" Fill="Black">
+                        <Path.Data>
+                            <PathGeometry Figures="M 4.55286 9.70078 C 3.187 9.70078 2.04878 9.25984 1.25203 8.37795 C 0.455284 7.49606 0 6.3937 0 5.07087 V 4.74016 C 0 3.41732 0.455284 2.20472 1.25203 1.32283 C 2.04878 0.440944 3.07318 4.20518e-07 4.32521 4.20518e-07 C 5.57725 4.20518e-07 6.60164 0.330709 7.28457 1.10236 C 7.9675 1.87402 8.30896 2.86614 8.30896 4.18897 V 5.40157 H 2.27643 C 2.27643 6.17323 2.50407 6.72441 2.95935 7.27559 C 3.41464 7.82677 3.98375 7.937 4.66668 7.937 C 5.23578 7.937 5.80489 7.82677 6.14636 7.71653 C 6.60164 7.6063 6.9431 7.38583 7.39839 7.16535 L 8.08132 8.59842 C 7.73985 8.92913 7.28457 9.1496 6.60164 9.37008 C 6.03253 9.59055 5.34961 9.70078 4.55286 9.70078 Z M 4.32521 1.65354 C 3.75611 1.65354 3.30082 1.87402 2.95935 2.31496 C 2.61789 2.75591 2.39025 3.30709 2.27643 3.85827 H 6.14636 V 3.63779 C 6.14636 3.08661 6.03253 2.53543 5.69107 2.20472 C 5.34961 1.76378 4.89432 1.65354 4.32521 1.65354 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path RenderTransform="1.0,0.0,0.0,1.0,40.6748,12.2992" Fill="Black">
+                        <Path.Data>
+                            <PathGeometry Figures="M 5.80489 6.94488 C 5.80489 6.61417 5.69107 6.3937 5.34961 6.17323 C 5.00814 5.95276 4.55285 5.73228 3.75611 5.62205 C 2.61789 5.40157 1.70732 5.07086 1.13821 4.62992 C 0.569107 4.18897 0.227644 3.6378 0.227644 2.86614 C 0.227644 2.09449 0.569105 1.43307 1.25203 0.881889 C 1.93496 0.330708 2.84553 4.20518e-07 3.98375 4.20518e-07 C 5.12196 4.20518e-07 6.14636 0.330708 6.82928 0.881889 C 7.51221 1.43307 7.85368 2.09449 7.85368 2.97638 H 5.69107 C 5.69107 2.53543 5.57725 2.20472 5.23578 1.98425 C 4.89432 1.65354 4.55286 1.54331 3.98375 1.54331 C 3.41464 1.54331 3.07318 1.65354 2.73172 1.87401 C 2.39025 2.09449 2.27643 2.4252 2.27643 2.75591 C 2.27643 3.08661 2.39025 3.30708 2.61789 3.52756 C 2.84553 3.74803 3.41464 3.85827 4.21139 4.07874 C 5.46343 4.29921 6.374 4.62992 6.9431 5.07087 C 7.51221 5.51181 7.85368 6.06299 7.85368 6.83464 C 7.85368 7.71653 7.51221 8.37795 6.82928 8.92913 C 6.14636 9.48031 5.12196 9.70078 3.98375 9.70078 C 2.73171 9.70078 1.70732 9.37008 1.02439 8.81889 C 0.341466 8.15748 0 7.49606 0 6.72441 H 2.04878 C 2.04878 7.27559 2.27643 7.71653 2.61789 7.937 C 2.95936 8.15748 3.41464 8.26771 3.98375 8.26771 C 4.55286 8.26771 5.00814 8.15748 5.23578 7.937 C 5.69107 7.6063 5.80489 7.27559 5.80489 6.94488 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path RenderTransform="1.0,0.0,0.0,1.0,50.2358,12.2992" Fill="Black">
+                        <Path.Data>
+                            <PathGeometry Figures="M 1.73678e-06 4.74016 C 1.73678e-06 3.30709 0.341466 2.20472 1.13822 1.32283 C 1.93497 0.440944 3.07318 4.20518e-07 4.43903 4.20518e-07 C 5.80489 4.20518e-07 6.9431 0.440944 7.73985 1.32283 C 8.5366 2.20472 8.87806 3.30709 8.87806 4.74016 V 4.96063 C 8.87806 6.3937 8.5366 7.49606 7.73985 8.37795 C 6.9431 9.25984 5.91871 9.70078 4.43903 9.70078 C 3.07318 9.70078 1.93497 9.25984 1.13822 8.37795 C 0.341466 7.49606 1.73678e-06 6.3937 1.73678e-06 4.96063 V 4.74016 V 4.74016 Z M 2.16261 4.85039 C 2.16261 5.73228 2.39025 6.50394 2.73171 7.05512 C 3.07318 7.6063 3.64228 7.937 4.43903 7.937 C 5.23578 7.937 5.80489 7.6063 6.14635 7.05512 C 6.48782 6.50394 6.71546 5.73228 6.71546 4.85039 V 4.62992 C 6.71546 3.74803 6.48782 2.97638 6.14635 2.4252 C 5.80489 1.87401 5.23578 1.54331 4.43903 1.54331 C 3.64228 1.54331 3.07318 1.87401 2.73171 2.4252 C 2.39025 2.97638 2.16261 3.74803 2.16261 4.62992 V 4.85039 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path RenderTransform="1.0,0.0,0.0,1.0,60.252,8.0" Fill="Black">
+                        <Path.Data>
+                            <PathGeometry Figures="M 1.47968 13.7795 V 5.95275 H -3.47355e-06 V 4.40945 H 1.47968 V 3.30709 C 1.47968 2.31496 1.82115 1.43307 2.39025 0.881889 C 2.95936 0.330709 3.75611 -2.10259e-07 4.7805 -2.10259e-07 C 5.00814 -2.10259e-07 5.23578 -2.10259e-07 5.46343 -2.10259e-07 C 5.69107 -2.10259e-07 5.91871 0.110236 6.14635 0.110236 L 5.91871 1.76378 C 5.80489 1.76378 5.69107 1.76378 5.57725 1.65354 C 5.46343 1.65354 5.23578 1.65354 5.12196 1.65354 C 4.66667 1.65354 4.32522 1.76378 4.09757 2.09449 C 3.86993 2.31496 3.75611 2.7559 3.75611 3.19685 V 4.29921 H 5.69107 V 5.84252 H 3.75611 V 13.6693 H 1.47968 V 13.7795 V 13.7795 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                </Canvas>
+                <Path RenderTransform="1.0,0.0,0.0,1.0,67.4229,10.0945" Fill="Black">
+                    <Path.Data>
+                        <PathGeometry Figures="M 3.75611 4.20518e-07 V 2.31496 H 5.46343 V 3.85827 H 3.75611 V 9.03937 C 3.75611 9.48031 3.86993 9.70078 3.98375 9.92126 C 4.21139 10.0315 4.43903 10.1417 4.66668 10.1417 C 4.7805 10.1417 4.89432 10.1417 5.00814 10.1417 C 5.12196 10.1417 5.23578 10.1417 5.3496 10.0315 L 5.57725 11.5748 C 5.34961 11.685 5.12197 11.7953 4.89432 11.7953 C 4.66668 11.7953 4.32521 11.9055 4.09757 11.9055 C 3.30082 11.9055 2.61789 11.685 2.16261 11.2441 C 1.70732 10.8031 1.47968 10.0315 1.47968 9.1496 V 3.9685 H 0 V 2.4252 H 1.47968 V 0.110236 H 3.75611 V 4.20518e-07 Z" FillRule="Nonzero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+            <DataGrid x:Name="SupplyDataGrid" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="10" IsReadOnly="True" AutoGenerateColumns="False" SelectionChanged="SupplyDataGrid_SelectionChanged" ColumnWidth="Auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Цена" Binding="{Binding Price}" />
+                <DataGridTextColumn Header="Агент" Binding="{Binding Agent}" />
+                <DataGridTextColumn Header="Клиент" Binding="{Binding Client}" />
+                <DataGridTextColumn Header="Объект недвижимости" Binding="{Binding RealEstate}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="2" Margin="10">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label Content="Объект" Grid.Column="0" Grid.Row="0" />
+                <ComboBox Style="{DynamicResource ComboBoxStyle1}" x:Name="RealEstateCb" Grid.Column="0" Grid.Row="1" SelectionChanged="RealEstateCb_SelectionChanged"/>
+
+                <Label Content="Клиент" Grid.Column="0" Grid.Row="2" />
+                <ComboBox Style="{DynamicResource ComboBoxStyle1}" x:Name="ClientCb" Grid.Column="0" Grid.Row="3" SelectionChanged="ClientCb_SelectionChanged" />
+
+                <Label Content="Агент" Grid.Column="1" Grid.Row="0" />
+                <ComboBox Style="{DynamicResource ComboBoxStyle1}" x:Name="AgentCb" Grid.Column="1" Grid.Row="1"/>
+
+                <Label Content="Цена" Grid.Column="1" Grid.Row="2" />
+                <TextBox x:Name="PriceTextBox" Grid.Column="1" Grid.Row="3"/>
+            </Grid>
+            <Button x:Name="AddWindow" Content="Добавить" Margin="0,20,0,5" Click="AddWindow_Click" />
+            <Button x:Name="Update" Content="Обновить" Margin="0,10,0,5" Click="Update_Click" />
+            <Button x:Name="Delete" Content="Удалить" Margin="0,10" Click="Delete_Click" />
+            <Button x:Name="Back" Content="Отменить" Margin="0,5" Click="Back_Click" Visibility="Hidden" />
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="2" Margin="10" />
+    </StackPanel>
+</Window>
